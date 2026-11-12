@@ -1,0 +1,38 @@
+# Blueprint de Render para FITNESS AI: servicio web Node.js + PostgreSQL gestionado.
+# Uso: en Render → New → Blueprint → elige este repositorio y la rama. Ver docs/DESPLIEGUE.md.
+# Los planes y precios los define Render y pueden cambiar: revísalos antes de confirmar.
+
+databases:
+  - name: fitness-ai-db
+    databaseName: fitness_ai
+    user: fitness_ai
+    plan: basic-256mb
+
+services:
+  - type: web
+    name: fitness-ai
+    runtime: node
+    plan: starter
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fitness-ai-db
+          property: connectionString
+      # La conexión interna de Render no sale de su red privada
+      - key: DATABASE_SSL
+        value: "false"
+      # Clave de cifrado de datos de salud: Render la genera una sola vez (256 bits en base64).
+      # Cópiala a un gestor de secretos: si se pierde, los datos de salud cifrados no se pueden recuperar.
+      - key: APP_ENCRYPTION_KEY
+        generateValue: true
+      # URL pública del servicio, p. ej. https://fitness-ai.onrender.com (se pide al crear el blueprint)
+      - key: APP_ORIGIN
+        sync: false
+      # Clave de la API de Anthropic (se pide al crear el blueprint; sin ella la IA queda desactivada)
+      - key: ANTHROPIC_API_KEY
+        sync: false

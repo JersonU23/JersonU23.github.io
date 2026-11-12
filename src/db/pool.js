@@ -9,7 +9,7 @@ pg.types.setTypeParser(1082, (v) => v);
 
 export const pool = new pg.Pool({
   connectionString: config.databaseUrl,
-  ssl: config.databaseSsl ? { rejectUnauthorized: true } : false,
+  ssl: config.databaseSsl ? { rejectUnauthorized: config.databaseSsl === 'true' } : false,
   max: 10,
 });
 

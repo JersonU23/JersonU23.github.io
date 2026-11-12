@@ -86,6 +86,8 @@ TEST_DATABASE_URL=postgres://usuario:clave@localhost:5432/fitness_test npm test
 ```
 
 ## Despliegue en producción
+Guía paso a paso: [`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md) (Render con `render.yaml` o Docker con `Dockerfile`).
+
 GitHub Pages **no** puede alojar esta aplicación porque necesita un servidor Node.js y PostgreSQL. Opciones recomendadas:
 - **App**: Render, Railway, Fly.io o un VPS con `npm start` (el arranque aplica las migraciones).
 - **Base de datos**: PostgreSQL gestionado (Neon, Supabase, Railway, RDS) con `DATABASE_SSL=true`.
