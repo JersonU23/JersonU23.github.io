@@ -1,0 +1,40 @@
+{
+  "name": "fitness-ai",
+  "version": "0.1.0",
+  "description": "FITNESS AI — plataforma SaaS de gestión de gimnasios con planificación inteligente de entrenamiento y nutrición",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "bootstrap": "node scripts/bootstrap.js",
+    "seed:exercises": "node scripts/seed-exercises.js",
+    "test": "node --test --test-concurrency=1 tests/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JersonU23/JersonU23.github.io.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/JersonU23/JersonU23.github.io/issues"
+  },
+  "homepage": "https://github.com/JersonU23/JersonU23.github.io#readme",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.4",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.2"
+  },
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  }
+}
