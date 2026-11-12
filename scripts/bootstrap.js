@@ -32,7 +32,7 @@ const result = await tx(async (db) => {
   const { rows: [u] } = await db.query(
     `INSERT INTO users (gym_id, email, password_hash, role, full_name) VALUES ($1,$2,$3,'admin',$4) RETURNING id`,
     [gym.id, args.email, await hashPassword(pwd), args.name]);
-  await db.query(`INSERT INTO audit_logs (gym_id, actor_id, action, entity, entity_id) VALUES ($1,$2,'gym.bootstrap','gym',$1)`, [gym.id, u.id]);
+  await db.query(`INSERT INTO audit_logs (gym_id, actor_id, action, entity, entity_id) VALUES ($1,$2,'gym.bootstrap','gym',$3)`, [gym.id, u.id, String(gym.id)]);
   return { gym: gym.id, admin: u.id };
 });
 console.log('Gimnasio y administrador creados:', result);

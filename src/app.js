@@ -38,8 +38,10 @@ export function createApp() {
         'media-src': ["'self'", 'https:'],
         'connect-src': ["'self'"],
         'frame-ancestors': ["'none'"],
+        'upgrade-insecure-requests': config.isProd ? [] : null,
       },
     },
+    hsts: config.isProd ? { maxAge: 31536000, includeSubDomains: true } : false,
     crossOriginEmbedderPolicy: false,
   }));
   app.use(express.json({ limit: '1mb' }));

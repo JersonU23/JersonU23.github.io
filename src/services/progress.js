@@ -25,7 +25,9 @@ export async function periodSummary(athleteId, { days = 15, since = null } = {})
   const sessions = await many(
     `SELECT id, performed_on, day_key, duration_min, fatigue FROM workout_sessions
       WHERE athlete_id = $1 AND performed_on >= $2 ORDER BY performed_on`, [athleteId, fromStr]);
-  const planned = Math.round((plannedPerWeek(plan) * spanDays) / 7);
+  // Lo planificado se cuenta solo desde que el plan está activo (un plan nuevo no arrastra semanas previas).
+  const planDays = plan?.activated_at ? Math.max(1, Math.ceil((Date.now() - new Date(plan.activated_at).getTime()) / 86400000)) : spanDays;
+  const planned = Math.round((plannedPerWeek(plan) * Math.min(spanDays, planDays)) / 7);
   const adherence = planned ? Math.min(1, sessions.length / planned) : null;
 
   // Progreso por ejercicio: mejor e1RM de la primera vs. la segunda mitad del periodo
